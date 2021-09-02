@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A CLI in order to generate the library",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,7 +29,12 @@
   "homepage": "https://github.com/fogcity/roue#readme",
   "dependencies": {
     "chalk": "^4.1.2",
-    "commander": "^8.1.0",
-    "conf": "^10.0.2"
+    "conf": "^10.0.2",
+    "execa": "^5.1.1",
+    "fs-extra": "^10.0.0",
+    "minimist": "^1.2.5",
+    "ora": "^6.0.0",
+    "prompts": "^2.4.1",
+    "rimraf": "^3.0.2"
   }
 }
