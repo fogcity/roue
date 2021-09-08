@@ -3,7 +3,8 @@ import prompts from "prompts"; // interactive prompts
 import parseArgs from "minimist"; // get and parse command line parameters
 import fs from "fs-extra"; // substitute for fs
 import ora from "ora"; // elegant terminal spinner
-import cp from "child_process";
+import execa from "execa"; // process execution
+import boxen from "boxen"; // create boxes in the terminal
 const argv = parseArgs(process.argv.slice(2)); //
 {
   (async () => {
@@ -34,11 +35,7 @@ const argv = parseArgs(process.argv.slice(2)); //
               },
             ],
           },
-          {
-            type: "text",
-            name: "version",
-            message: "version",
-          },
+
           {
             type: "text",
             name: "description",
@@ -106,7 +103,6 @@ const argv = parseArgs(process.argv.slice(2)); //
         const config = await prompts(questions);
         const spinner = ora("create files...").start();
         try {
-          console.log("config", config);
           switch (config.type) {
             case "lib":
               await fs.ensureDir(rootPath);
@@ -115,9 +111,14 @@ const argv = parseArgs(process.argv.slice(2)); //
               if (config.needServer) {
                 await fs.ensureDir(rootPath + "/example");
               }
+              const { stdout } = await execa("cd sytudu");
+              console.log(stdout);
+              // execa("npm init -y").stdout.pipe(process.stdout);
+              // execa(`cd ..`).stdout.pipe(process.stdout);
+
               await fs.outputJson(rootPath + "/package.json", {
                 name: libName,
-                version: config.version,
+                version: "0.0.1",
                 description: config.description,
                 main: "dist/index.js",
                 module: "dist/index.js",
@@ -132,13 +133,11 @@ const argv = parseArgs(process.argv.slice(2)); //
                   "test:watch": "jest --watch",
                   size: "size-limit",
                   analyze: "size-limit --why",
-                  convert: "jss convert target.css -f json > target.json",
                   lint: "eslint --fix --ext .ts,.tsx src",
                 },
                 keywords: [config.platform, config.type],
                 author: {},
                 license: "MIT",
-
                 "size-limit": [
                   {
                     path: "dist/index.js",
@@ -162,11 +161,11 @@ const argv = parseArgs(process.argv.slice(2)); //
                   "eslint-plugin-prettier": "^3.1.4",
                   "eslint-plugin-react": "^7.20.5",
                   jest: "^26.1.0",
-                  "jss-cli": "^6.0.2",
+
                   prettier: "^2.3.2",
                   react: "^17.0.2",
                   "react-dom": "^17.0.2",
-                  "react-jss": "^10.7.1",
+
                   rollup: "^2.53.3",
                   "rollup-plugin-filesize": "^9.1.1",
                   "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -178,7 +177,6 @@ const argv = parseArgs(process.argv.slice(2)); //
                   typescript: "^4.3.5",
                 },
                 peerDependencies: config.platform == "React" && {
-                  "react-jss": "^10.7.1",
                   react: ">=16.8.0",
                   "react-dom": ">=16.8.0",
                 },
@@ -262,6 +260,14 @@ const argv = parseArgs(process.argv.slice(2)); //
           }
 
           spinner.succeed("success!");
+          console.log(
+            boxen("ROUE", {
+              borderColor: "#22577A",
+              float: "center",
+              align: "center",
+              padding: 1,
+            })
+          );
         } catch (err) {
           spinner.fail("error!");
         }
