@@ -5,7 +5,7 @@ import fs from "fs-extra"; // substitute for fs
 import ora from "ora"; // elegant terminal spinner
 import execa from "execa"; // process execution
 import boxen from "boxen"; // create boxes in the terminal
-const argv = parseArgs(process.argv.slice(2)); //
+const argv = parseArgs(process.argv.slice(2)); // top 2 argv
 {
   (async () => {
     if (argv._.length != 0) {
