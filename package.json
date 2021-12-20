@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "npm run publish"
   },
   "bin": {
     "roue": "index.js"
@@ -18,7 +18,10 @@
     "cli",
     "lib"
   ],
-  "author": "obito <xymzhs@gmail.com>",
+  "author": {
+    "name": "Trevor Xu",
+    "email": "xymzhs@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/fogcity/roue/issues"
