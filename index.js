@@ -6,7 +6,7 @@ import ora from "ora"; // elegant terminal spinner
 import execa from "execa"; // process execution
 import boxen from "boxen"; // create boxes in the terminal
 
-const argv = parseArgs(process.argv.slice(2)); // top 2 argv
+const argv = parseArgs(process.argv.slice(2)); // get top 2 argv
 {
   (async () => {
     if (argv._.length != 0) {
@@ -204,6 +204,15 @@ const argv = parseArgs(process.argv.slice(2)); // top 2 argv
             })
           );
         } catch (err) {}
+      } else if (command == "build") {
+        try {
+          if (await fs.pathExists("./.roue")) {
+            const packageObj = await fs.readJson("./.roue");
+            console.log(packageObj);
+          }
+        } catch (err) {
+          console.error(err);
+        }
       }
     }
   })();
