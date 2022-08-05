@@ -207,7 +207,7 @@ const argv = parseArgs(process.argv.slice(2)); // get top 2 argv
       } else if (command == "build") {
         try {
           if (await fs.pathExists("./.roue")) {
-            const packageObj = await fs.readJson("./.roue");
+            const roueConfigObj = await fs.readJson("./.roue");
             console.log(packageObj);
           }
         } catch (err) {
